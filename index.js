@@ -4,7 +4,8 @@ const cors = require('cors');
 const { api } = require('./services/axios');
 const teamsModel = require('./models/teamsModel');
 const typoModel = require('./models/typoModel');
-
+const sportsModel = require('./models/sportsModel');
+const path = require('path');
 const app = express();
 const port = 8080;
 var api_time = true;
@@ -14,16 +15,52 @@ app.use(cors());
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.json());
-app.use(express.static('public'));
-app.get('/all', (req, res) => {
+app.use(express.static(path.resolve(__dirname, './admin/build')));
+app.get('/all', async (req, res) => {
   const force_read = req.query.force_read == 1;
+  const odds = await sportsModel.find({});
   console.log('force', force_read);
   if (force_read || api_time) {
     api_time = false;
-    api
-      .get('/api/Schedule')
-      .then(response => res.json(response.data))
-      .catch(err => console.log('err', err));
+    const all = await api.get('/api/Schedule');
+    var games_table = [];
+    all.data.forEach(group => {
+      group.Leagues.forEach(league => {
+        league.Games.forEach(game => {
+          if (game.GameLine && isComing(game.GameDateTime) && game.GameStatus === 'Open' && game.Format === 'Game') {
+            const visitor = game.VisitorTeam.TeamName;
+            const home = game.HomeTeam.TeamName;
+            let show = 0;
+            if (odds.length > 0) {
+              const vOdds = odds.find(x => x.name === visitor).odds;
+              const hOdds = odds.find(x => x.name === home).odds;
+
+              show = vOdds > game.GameLine.VOdds ? 1 : -1;
+              if (vOdds === game.GameLine.VOdds) show = 0;
+              games_table.push({ name: visitor, odds: game.GameLine.VOdds, show: show });
+
+              show = hOdds > game.GameLine.HOdds ? 1 : -1;
+              if (hOdds === game.GameLine.HOdds) show = 0;
+              games_table.push({ name: home, odds: game.GameLine.HOdds, show: show });
+            } else {
+              games_table.push({ name: visitor, odds: game.GameLine.VOdds, show: show });
+              games_table.push({ name: home, odds: game.GameLine.HOdds, show: show });
+            }
+          }
+        });
+      });
+    });
+    const bulkWrite = await sportsModel.bulkWrite(
+      games_table.map(team => ({
+        updateOne: {
+          filter: { name: team.name },
+          update: { $set: team },
+          upsert: true,
+        },
+      }))
+    );
+    console.log('bulkWrite', bulkWrite);
+    res.json(all.data);
   } else {
     res.json({ read_ls: true });
   }
@@ -54,7 +91,6 @@ app.get('/getTeams', async (req, res) => {
             const home = game.HomeTeam.TeamName;
             let v_db = [],
               h_db = [];
-
             for (let i = 0; i < teams_db.length; i++) {
               const team = teams_db[i];
               if (team.old_name === visitor) {
@@ -101,6 +137,10 @@ app.get('/getTeams', async (req, res) => {
   }
 });
 
+app.get('/getOdds', async (req, res) => {
+  const odds = await sportsModel.find({});
+  return res.json(odds);
+});
 app.get('/getSettings', async (req, res) => {
   const settings = await typoModel.find({});
   return res.json(settings[0]);

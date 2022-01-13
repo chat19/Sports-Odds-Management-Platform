@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
+import Login from '../pages/login';
+
 import FontPickerHeading from '../pages/font-picker-heading';
 import FontPickerBody from '../pages/font-picker-body';
 import FontPickerSidebar from '../pages/font-picker-sidebar';
@@ -17,16 +19,16 @@ export default function Index() {
   return (
     <Router>
       <div className='app'>
-        <Sidebar />
+        {localStorage.getItem('login') === 'allow' && <Sidebar />}
         <Routes>
-          <Route exact path='/' element={<FontPickerHeading />} />
-          <Route exact path='/font-heading' element={<FontPickerHeading />} />
-          <Route exact path='/font-body' element={<FontPickerBody />} />
-          <Route exact path='/font-sidebar' element={<FontPickerSidebar />} />
-          <Route exact path='/color-heading' element={<ColorPickerHeading />} />
-          <Route exact path='/color-body' element={<ColorPickerBody />} />
-          <Route exact path='/view-teams' element={<TeamList />} />
-          <Route exact path='/set-teams' element={<TeamMapping />} />
+          <Route exact path='/' element={localStorage.getItem('login') === 'allow' ? <FontPickerHeading /> : <Login />} />
+          <Route exact path='/font-heading' element={localStorage.getItem('login') === 'allow' ? <FontPickerHeading /> : <Login />} />
+          <Route exact path='/font-body' element={localStorage.getItem('login') === 'allow' ? <FontPickerBody /> : <Login />} />
+          <Route exact path='/font-sidebar' element={localStorage.getItem('login') === 'allow' ? <FontPickerSidebar /> : <Login />} />
+          <Route exact path='/color-heading' element={localStorage.getItem('login') === 'allow' ? <ColorPickerHeading /> : <Login />} />
+          <Route exact path='/color-body' element={localStorage.getItem('login') === 'allow' ? <ColorPickerBody /> : <Login />} />
+          <Route exact path='/view-teams' element={localStorage.getItem('login') === 'allow' ? <TeamList /> : <Login />} />
+          <Route exact path='/set-teams' element={localStorage.getItem('login') === 'allow' ? <TeamMapping /> : <Login />} />
         </Routes>
       </div>
     </Router>

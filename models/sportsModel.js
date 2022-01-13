@@ -4,23 +4,21 @@ const Schema = mongoose.Schema;
 
 const SportsModel = new Schema(
   {
-    old_name: {
+    name: {
       type: String,
       unique: true,
     },
-    league_name: {
-      type: String,
+    odds: {
+      type: Number,
     },
-    new_name: {
-      type: String,
-    },
-    logo: {
-      type: String,
+    show: {
+      type: Number,
+      default: 0,
     },
   },
   { strict: true },
   {
-    collection: 'Teams',
+    collection: 'sports',
     timestamps: {
       createdAt: 'created_at',
       updatedAt: 'updated_at',
