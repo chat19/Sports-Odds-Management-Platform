@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import { api } from '../../utils/api_handler';
 import Toast from '../toast';
 
-export default function App({ sampleText, type }) {
+export default function App({ sampleText, type, site }) {
   const [color, setColor] = useColor('hex', '#3a3a3ae3');
   const [showToast, setShowToast] = useState(false);
   const handleSave = () => {
@@ -15,9 +15,15 @@ export default function App({ sampleText, type }) {
       color: color.hex,
       type: type,
     };
-    api.saveColors(data).then(res => {
-      setShowToast(true);
-    });
+
+    site === 1 &&
+      api.saveColors(data).then(res => {
+        setShowToast(true);
+      });
+    site === 2 &&
+      api.saveColors2(data).then(res => {
+        setShowToast(true);
+      });
   };
   return (
     <>

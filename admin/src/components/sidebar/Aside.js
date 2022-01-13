@@ -5,6 +5,7 @@ import { BsFillFileEarmarkFontFill } from 'react-icons/bs';
 import { IoIosColorPalette } from 'react-icons/io';
 import { MdPreview } from 'react-icons/md';
 import { RiTeamFill } from 'react-icons/ri';
+import { AiTwotoneSetting } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
 const Aside = () => {
@@ -29,24 +30,47 @@ const Aside = () => {
 
       <SidebarContent>
         <Menu iconShape='circle'>
-          <SubMenu title='Font Picker' icon={<BsFillFileEarmarkFontFill />}>
-            <MenuItem>
-              Heading Font <Link to='/font-heading' />
-            </MenuItem>
-            <MenuItem>
-              Body Font <Link to='/font-body' />
-            </MenuItem>
-            <MenuItem>
-              Sidebar Font <Link to='/font-sidebar' />
-            </MenuItem>
+          <SubMenu title='Tinlizzie' icon={<AiTwotoneSetting />}>
+            <SubMenu title='Font Picker' icon={<BsFillFileEarmarkFontFill />}>
+              <MenuItem>
+                Heading Font <Link to='/font-heading' />
+              </MenuItem>
+              <MenuItem>
+                Body Font <Link to='/font-body' />
+              </MenuItem>
+              <MenuItem>
+                Sidebar Font <Link to='/font-sidebar' />
+              </MenuItem>
+            </SubMenu>
+            <SubMenu title='Color Picker' icon={<IoIosColorPalette />}>
+              <MenuItem>
+                Heading Font Color <Link to='/color-heading' />
+              </MenuItem>
+              <MenuItem>
+                Body Font Color <Link to='/color-body' />
+              </MenuItem>
+            </SubMenu>
           </SubMenu>
-          <SubMenu title='Color Picker' icon={<IoIosColorPalette />}>
-            <MenuItem>
-              Heading Font Color <Link to='/color-heading' />
-            </MenuItem>
-            <MenuItem>
-              Body Font Color <Link to='/color-body' />
-            </MenuItem>
+          <SubMenu title='Cadillacjacksgaming' icon={<AiTwotoneSetting />}>
+            <SubMenu title='Font Picker' icon={<BsFillFileEarmarkFontFill />}>
+              <MenuItem>
+                Heading Font <Link to='/font-heading2' />
+              </MenuItem>
+              <MenuItem>
+                Body Font <Link to='/font-body2' />
+              </MenuItem>
+              <MenuItem>
+                Sidebar Font <Link to='/font-sidebar2' />
+              </MenuItem>
+            </SubMenu>
+            <SubMenu title='Color Picker' icon={<IoIosColorPalette />}>
+              <MenuItem>
+                Heading Font Color <Link to='/color-heading2' />
+              </MenuItem>
+              <MenuItem>
+                Body Font Color <Link to='/color-body2' />
+              </MenuItem>
+            </SubMenu>
           </SubMenu>
         </Menu>
         <Menu iconShape='circle'>

@@ -6,7 +6,7 @@ export default function Index() {
     <div className='page-container'>
       <h1 style={{ marginTop: '-10%', marginBottom: '5%' }}> Set Body Font Color</h1>
 
-      <ColorPickerComponent sampleText='Sample Body Text' type='body' site={1} />
+      <ColorPickerComponent sampleText='Sample Body Text' type='body' site={2} />
     </div>
   );
 }

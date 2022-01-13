@@ -4,9 +4,9 @@ import ColorPickerComponent from '../components/color-picker';
 export default function Index() {
   return (
     <div className='page-container'>
-      <h1 style={{ marginTop: '-10%', marginBottom: '5%' }}> Set Body Font Color</h1>
+      <h1 style={{ marginTop: '-10%', marginBottom: '5%' }}> Set Heading Font Color</h1>
 
-      <ColorPickerComponent sampleText='Sample Body Text' type='body' site={1} />
+      <ColorPickerComponent sampleText='Sample Heading Text' type='heading' site={2} />
     </div>
   );
 }

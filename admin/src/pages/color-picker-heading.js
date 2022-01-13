@@ -6,7 +6,7 @@ export default function Index() {
     <div className='page-container'>
       <h1 style={{ marginTop: '-10%', marginBottom: '5%' }}> Set Heading Font Color</h1>
 
-      <ColorPickerComponent sampleText='Sample Heading Text' type='heading' />
+      <ColorPickerComponent sampleText='Sample Heading Text' type='heading' site={1} />
     </div>
   );
 }

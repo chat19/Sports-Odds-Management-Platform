@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import { api } from '../../utils/api_handler';
 import Toast from '../toast';
 
-export default function App({ type, heading }) {
+export default function App({ type, heading, site }) {
   const [activeFontFamily, setFont] = useState('Open Sans');
   const [size, setSize] = useState(type === 'heading' ? '42px' : '16px');
   const [fontStyle, setFontStyle] = useState({});
@@ -21,9 +21,14 @@ export default function App({ type, heading }) {
       fontStyle: fontStyle,
       type: type,
     };
-    api.saveFonts(data).then(res => {
-      setShowToast(true);
-    });
+    site === 1 &&
+      api.saveFonts(data).then(res => {
+        setShowToast(true);
+      });
+    site === 2 &&
+      api.saveFonts2(data).then(res => {
+        setShowToast(true);
+      });
   };
 
   const handleSizeChange = event => {

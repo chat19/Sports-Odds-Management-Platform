@@ -81,6 +81,34 @@ export default function StickyHeadTable({ data }) {
     }
   };
 
+  const handleChange = e => {
+    const val = e.target.value.toLowerCase();
+
+    const teamRows = data
+      .filter(row => row.old_name.toLowerCase().includes(val))
+      .map(team =>
+        createData(
+          team.old_name,
+          team.league_name,
+          <TextField
+            label='Set Team Name'
+            variant='outlined'
+            size='small'
+            defaultValue={team.db.length > 0 ? team.db[0] : ''}
+            onBlur={e => handleBlur(e.target.value, team.old_name, 'new_name', team.league_name)}
+          />,
+          <TextField
+            label='Set Icon Url'
+            variant='outlined'
+            size='small'
+            onBlur={e => handleBlur(e.target.value, team.old_name, 'logo', team.league_name)}
+            defaultValue={team.db.length > 0 ? team.db[1] : ''}
+          />
+        )
+      );
+    setRows(teamRows);
+  };
+
   const handleBlur = (val, name, type, league) => {
     setChanges(changes => ({ ...changes, ...{ [name]: { ...changes[name], ...{ [type]: val, old_name: name, league_name: league } } } }));
   };
@@ -102,6 +130,7 @@ export default function StickyHeadTable({ data }) {
         <Button style={{ float: 'right' }} variant='contained' disabled={loading} onClick={handleSave}>
           Save
         </Button>
+        <TextField style={{ float: 'right' }} onChange={handleChange} placeholder='Search by TeamName' size='small' />
 
         {loading && (
           <CircularProgress

@@ -4,6 +4,7 @@ const cors = require('cors');
 const { api } = require('./services/axios');
 const teamsModel = require('./models/teamsModel');
 const typoModel = require('./models/typoModel');
+const typo2Model = require('./models/typoModel');
 const sportsModel = require('./models/sportsModel');
 const path = require('path');
 const app = express();
@@ -32,8 +33,8 @@ app.get('/all', async (req, res) => {
             const home = game.HomeTeam.TeamName;
             let show = 0;
             if (odds.length > 0) {
-              const vOdds = odds.find(x => x.name === visitor).odds;
-              const hOdds = odds.find(x => x.name === home).odds;
+              const vOdds = odds.find(x => x.name === visitor)?.odds;
+              const hOdds = odds.find(x => x.name === home)?.odds;
 
               show = vOdds > game.GameLine.VOdds ? 1 : -1;
               if (vOdds === game.GameLine.VOdds) show = 0;
@@ -59,7 +60,7 @@ app.get('/all', async (req, res) => {
         },
       }))
     );
-    console.log('bulkWrite', bulkWrite);
+
     res.json(all.data);
   } else {
     res.json({ read_ls: true });
@@ -145,6 +146,10 @@ app.get('/getSettings', async (req, res) => {
   const settings = await typoModel.find({});
   return res.json(settings[0]);
 });
+app.get('/getSettings2', async (req, res) => {
+  const settings = await typo2Model.find({});
+  return res.json(settings[0]);
+});
 
 app.post('/saveTeams', async (req, res) => {
   // const mg_delete = await teamsModel.deleteMany({});
@@ -179,6 +184,26 @@ app.post('/saveFonts', async (req, res) => {
 
   const fontUpdate = await typoModel.updateOne({ table: 'typo' }, update, { upsert: true });
   console.log('fontUpdate', fontUpdate);
+  return res.json({ success: true, data: fontUpdate });
+});
+
+app.post('/saveColors2', async (req, res) => {
+  console.log('req.body', req.body);
+  const color = req.body.color;
+  const type = req.body.type;
+  const update = type === 'heading' ? { color_heading: color } : { color_body: color };
+  const colorUpdate = await typoModel.updateOne({ table: 'typo' }, update, { upsert: true });
+
+  return res.json({ success: true, data: colorUpdate });
+});
+
+app.post('/saveFonts2', async (req, res) => {
+  const type = req.body.type;
+  const data = { size: req.body.size, fontFamily: req.body.fontFamily, fontStyle: req.body.fontStyle };
+  const update = type === 'heading' ? { font_heading: data } : type === 'body' ? { font_body: data } : { font_sidebar: data };
+
+  const fontUpdate = await typoModel.updateOne({ table: 'typo' }, update, { upsert: true });
+
   return res.json({ success: true, data: fontUpdate });
 });
 
