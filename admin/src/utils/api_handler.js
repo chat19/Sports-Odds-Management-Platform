@@ -24,6 +24,14 @@ const saveFonts2 = data => {
   return $.post(`/saveFonts2`, data);
 };
 
+const addAccount = data => {
+  return $.post(`/addAccount`, data);
+};
+
+const login = data => {
+  return $.post(`/login`, data);
+};
+
 export const api = {
   getTeams,
   saveTeams,
@@ -31,4 +39,6 @@ export const api = {
   saveFonts,
   saveColors2,
   saveFonts2,
+  addAccount,
+  login,
 };

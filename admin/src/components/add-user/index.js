@@ -3,36 +3,40 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-
+import { api } from '../../utils/api_handler';
 import Box from '@mui/material/Box';
-
-import { api } from '../utils/api_handler';
+import IconButton from '@mui/material/IconButton';
 import { BsFillShieldLockFill } from 'react-icons/bs';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { MdVisibility } from 'react-icons/md';
+import { MdVisibilityOff } from 'react-icons/md';
 
 const theme = createTheme();
 
 export default function SignIn() {
+  const [showPassword, setShowPassword] = React.useState(false);
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = event => {
+    event.preventDefault();
+  };
   const handleSubmit = event => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
 
     api
-      .login({ email: data.get('email'), password: data.get('password') })
+      .addAccount({ email: data.get('email'), password: data.get('password') })
       .then(res => {
-        if (res.data.success) {
-          localStorage.setItem('login', 'allow');
-          window.location.reload();
-        } else {
-          alert('Invalid Credentials!');
-        }
+        alert('new User created');
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        alert(err);
+      });
   };
 
   return (
@@ -51,7 +55,7 @@ export default function SignIn() {
             <BsFillShieldLockFill />
           </Avatar>
           <Typography component='h1' variant='h5'>
-            Sign in
+            Create New User
           </Typography>
 
           <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -62,13 +66,21 @@ export default function SignIn() {
               fullWidth
               name='password'
               label='Password'
-              type='password'
+              type={showPassword ? 'text' : 'password'}
               id='password'
               autoComplete='current-password'
             />
-            <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='Remember me' />
+            <IconButton
+              aria-label='toggle password visibility'
+              onClick={handleClickShowPassword}
+              onMouseDown={handleMouseDownPassword}
+              edge='end'
+              style={{ top: '-20%', left: '85%', zIndex: '99' }}
+            >
+              {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+            </IconButton>
             <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
-              Sign In
+              Create
             </Button>
           </Box>
         </Box>

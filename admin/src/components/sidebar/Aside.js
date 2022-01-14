@@ -7,7 +7,7 @@ import { MdPreview } from 'react-icons/md';
 import { RiTeamFill } from 'react-icons/ri';
 import { AiTwotoneSetting } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-
+import { MdAccountCircle } from 'react-icons/md';
 const Aside = () => {
   return (
     <ProSidebar breakPoint='md'>
@@ -82,6 +82,11 @@ const Aside = () => {
               View All Teams <Link to='/view-teams' />
             </MenuItem>
           </SubMenu>
+        </Menu>
+        <Menu iconShape='circle'>
+          <MenuItem icon={<MdAccountCircle />}>
+            Manage Stuff <Link to='/accounts' />
+          </MenuItem>
         </Menu>
       </SidebarContent>
 

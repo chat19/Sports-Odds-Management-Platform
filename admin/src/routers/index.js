@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Login from '../pages/login';
+import Accounts from '../pages/accounts';
 
 import FontPickerHeading from '../pages/font-picker-heading';
 import FontPickerBody from '../pages/font-picker-body';
@@ -42,6 +43,7 @@ export default function Index() {
           <Route exact path='/color-body2' element={show ? <ColorPickerBody2 /> : <Login />} />
           <Route exact path='/view-teams' element={show ? <TeamList /> : <Login />} />
           <Route exact path='/set-teams' element={show ? <TeamMapping /> : <Login />} />
+          <Route exact path='/accounts' element={show ? <Accounts /> : <Login />} />
         </Routes>
       </div>
     </Router>

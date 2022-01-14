@@ -6,10 +6,13 @@ const teamsModel = require('./models/teamsModel');
 const typoModel = require('./models/typoModel');
 const typo2Model = require('./models/typoModel');
 const sportsModel = require('./models/sportsModel');
+const usersModel = require('./models/usersModel');
+
 const path = require('path');
 const app = express();
 const port = 8080;
-var api_time = true;
+var api_time1 = true,
+  api_time2 = true;
 
 app.use(cors());
 
@@ -19,10 +22,14 @@ app.use(express.json());
 app.use(express.static(path.resolve(__dirname, './admin/build')));
 app.get('/all', async (req, res) => {
   const force_read = req.query.force_read == 1;
+  const site = req.query.site;
+
   const odds = await sportsModel.find({});
   console.log('force', force_read);
-  if (force_read || api_time) {
-    api_time = false;
+  if (force_read || (site == 1 && api_time1) || (site == 2 && api_time2)) {
+    if (site == 1) api_time1 = false;
+    if (site == 2) api_time2 = false;
+
     const all = await api.get('/api/Schedule');
     var games_table = [];
     all.data.forEach(group => {
@@ -66,8 +73,10 @@ app.get('/all', async (req, res) => {
     res.json({ read_ls: true });
   }
 });
+
 setInterval(() => {
-  api_time = true;
+  api_time1 = true;
+  api_time2 = true;
 }, 300 * 1000);
 
 function isComing(inputDate) {
@@ -205,6 +214,24 @@ app.post('/saveFonts2', async (req, res) => {
   const fontUpdate = await typoModel.updateOne({ table: 'typo' }, update, { upsert: true });
 
   return res.json({ success: true, data: fontUpdate });
+});
+
+app.post('/addAccount', async (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  const isAdmin = false;
+  const users = await usersModel.findOneAndUpdate({ email: email }, { email: email, password: password, isAdmin: isAdmin }, { upsert: true });
+
+  res.json({ success: true, users: users });
+});
+
+app.post('/login', async (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  const isAdmin = false;
+  const user = await usersModel.findOne({ email: email });
+  if (user && user.password === password) res.json({ success: true });
+  else res.json({ success: false });
 });
 
 app.listen(process.env.PORT || port, () => {
