@@ -15,8 +15,10 @@ router.get('/', async (req, res) => {
   if (type === 'set') {
     const all = await api.get('/api/Schedule');
     const teams_db = await teamsModel.find({});
+
     var teams = [];
     var keys = [];
+
     all.data.forEach(group => {
       group.Leagues.forEach(league => {
         league.Games.forEach(game => {
@@ -27,16 +29,27 @@ router.get('/', async (req, res) => {
             const home = game.HomeTeam.TeamName;
             let v_db = [],
               h_db = [];
-            for (let i = 0; i < teams_db.length; i++) {
-              const team = teams_db[i];
-              if (team.old_name === visitor) {
-                v_db = [team.new_name, team.logo];
-                break;
-              }
-              if (team.old_name === home) {
-                h_db = [team.new_name, team.logo];
-                break;
-              }
+            // for (let i = 0; i < teams_db.length; i++) {
+            //   const team = teams_db[i];
+            //   if (visitor === 'PACKERS') console.log('team', teams_db);
+            //   if (team.old_name === visitor) {
+            //     v_db = [team.new_name, team.logo];
+            //     break;
+            //   }
+            //   if (team.old_name === home) {
+            //     h_db = [team.new_name, team.logo];
+            //     break;
+            //   }
+            // }
+            const v_find = teams_db.find(x => x.old_name === visitor);
+            const h_find = teams_db.find(x => x.old_name === home);
+            if (v_find) {
+              v_db[0] = v_find.new_name;
+              v_db[1] = v_find.logo;
+            }
+            if (h_find) {
+              h_db[0] = h_find.new_name;
+              h_db[1] = h_find.logo;
             }
 
             if (!keys.includes(visitor)) {

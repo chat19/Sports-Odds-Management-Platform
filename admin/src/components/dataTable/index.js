@@ -50,9 +50,8 @@ export default function DataTableSticky({ data }) {
 
   const handleChange = e => {
     const val = e.target.value.toLowerCase();
-
     const teamRows = data
-      .filter(row => row.old_name.toLowerCase().includes(val) || row.new_name.toLowerCase().includes(val))
+      .filter(row => row.old_name.toLowerCase().includes(val) || (row.new_name && row.new_name.toLowerCase().includes(val)))
       .map(team =>
         createData(
           team.old_name,
