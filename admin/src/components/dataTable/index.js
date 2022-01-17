@@ -41,7 +41,7 @@ export default function DataTableSticky({ data }) {
         team.old_name,
         team.league_name,
         team.new_name,
-        <img src={team.logo.includes('http') ? team.logo : noImage} width={60} height={60} />
+        <img src={team.logo && team.logo.includes('http') ? team.logo : noImage} width={60} height={60} />
       )
     );
 

@@ -49,6 +49,7 @@ export default function Index() {
       {lscache.get('isAuth') && <Sidebar isAdmin={lscache.get('isAdmin')} path={pathname} />}
 
       <Routes>
+        <Route path='*' element={<Navigate to='/' />} />
         <Route exact path='/' element={<FontPickerHeading />} />
         <Route exact path='/font-heading' element={<FontPickerHeading />} />
         <Route exact path='/font-heading2' element={<FontPickerHeading2 />} />
