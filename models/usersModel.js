@@ -8,12 +8,18 @@ const UsersModel = new Schema(
       type: String,
       unique: true,
     },
+    fullName: {
+      type: String,
+    },
     password: {
       type: String,
     },
     isAdmin: {
       type: Boolean,
-      default: false,
+    },
+    site: {
+      type: String,
+      default: 'both',
     },
   },
   { strict: true },
