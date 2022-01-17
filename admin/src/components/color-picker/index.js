@@ -7,9 +7,8 @@ import Box from '@mui/material/Box';
 import { api } from '../../utils/api_handler';
 import Toast from '../toast';
 
-export default function App({ sampleText, type, site }) {
-  const [color, setColor] = useColor('hex', '#3a3a3ae3');
-  const [showToast, setShowToast] = useState(false);
+export default function App({ sampleText, type, site, initVal }) {
+  const [color, setColor] = useColor('hex', initVal || '#3a3a3ae3');
   const handleSave = () => {
     const data = {
       color: color.hex,
@@ -18,16 +17,15 @@ export default function App({ sampleText, type, site }) {
 
     site === 1 &&
       api.saveColors(data).then(res => {
-        setShowToast(true);
+        alert('Saved Successfully!');
       });
     site === 2 &&
       api.saveColors2(data).then(res => {
-        setShowToast(true);
+        alert('Saved Successfully!');
       });
   };
   return (
     <>
-      <Toast showToast={showToast} />
       <Box sx={{ '& > :not(style)': { m: 1 }, position: 'relative', height: '50px', padding: '0 10%', textAlign: 'right' }}>
         <Button variant='contained' onClick={handleSave}>
           Save

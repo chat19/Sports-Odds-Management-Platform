@@ -5,10 +5,11 @@ import { api } from '../utils/api_handler';
 
 export default function Index() {
   const [teams, setTeams] = useState([]);
+  const [view, setView] = useState('all');
   useEffect(() => {
-    api.getTeams('set').then(res => {
+    api.getTeams('set', view).then(res => {
       setTeams(res.data);
     });
-  }, []);
-  return teams.length > 0 ? <EditableTable data={teams} /> : <Spinner />;
+  }, [view]);
+  return teams.length > 0 ? <EditableTable data={teams} setView={setView} /> : <Spinner />;
 }

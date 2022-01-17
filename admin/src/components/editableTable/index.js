@@ -14,6 +14,8 @@ import Button from '@mui/material/Button';
 import { api } from '../../utils/api_handler';
 import CircularProgress from '@mui/material/CircularProgress';
 import Toast from '../toast';
+import Switch from '@mui/material/Switch';
+import FormControlLabel from '@mui/material/FormControlLabel';
 const columns = [
   { id: 'name', label: 'Team Name (API)', minWidth: 100 },
   { id: 'league', label: 'League Name', minWidth: 100 },
@@ -32,13 +34,14 @@ function createData(name, league, newName, icon) {
   return { name, league, newName, icon };
 }
 
-export default function StickyHeadTable({ data }) {
+export default function StickyHeadTable({ setView, data }) {
   const [page, setPage] = React.useState(0);
   const [rows, setRows] = React.useState([]);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [changes, setChanges] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
-  const [showToast, setShowToast] = React.useState(false);
+
+  const [cur, setCurrent] = React.useState('All teams');
 
   useEffect(() => {
     const teamsData = data.map(team => {
@@ -77,7 +80,17 @@ export default function StickyHeadTable({ data }) {
 
     if (saveTeams.data.success) {
       setLoading(false);
-      setShowToast(true);
+      alert('Saved Successfully!');
+    }
+  };
+
+  const handleSwitch = () => {
+    if (cur === 'Currently playing teams') {
+      setCurrent('All teams');
+      setView('all');
+    } else {
+      setCurrent('Currently playing teams');
+      setView('current');
     }
   };
 
@@ -124,14 +137,14 @@ export default function StickyHeadTable({ data }) {
 
   return (
     <Paper sx={{ width: '100%', overflow: 'visible', padding: '0 2%' }}>
-      <Toast showToast={showToast} />
       <h1 style={{ textAlign: 'center' }}> Teams Mapping Bulk Editor</h1>
+
       <Box sx={{ '& > :not(style)': { m: 1 }, position: 'relative' }}>
         <Button style={{ float: 'right' }} variant='contained' disabled={loading} onClick={handleSave}>
           Save
         </Button>
         <TextField style={{ float: 'right' }} onChange={handleChange} placeholder='Search by TeamName' size='small' />
-
+        <FormControlLabel control={<Switch onChange={handleSwitch} />} label={cur} />
         {loading && (
           <CircularProgress
             size={20}

@@ -6,11 +6,12 @@ import AlertTitle from '@mui/material/AlertTitle';
 export default function DescriptionAlerts({ title, text, showToast }) {
   const [show, setShow] = useState(false);
   useEffect(() => {
-    setShow(showToast);
+    console.log('show', show);
+    setShow(true);
     setTimeout(() => {
       setShow(false);
     }, 3000);
-  }, [showToast]);
+  }, [showToast, showToast === true]);
   return (
     show && (
       <div style={{ position: 'fixed', right: 0, top: 0 }}>

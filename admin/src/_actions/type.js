@@ -1,0 +1,10 @@
+export const SWITCH_SIDEBAR = 'switch_sidebar';
+export const SWITCH_VIEW = 'switch_view';
+export const CHANGE_STYLE = 'change_style';
+export const SET_TEAMS = 'set_teams';
+export const SET_ODDS = 'set_odds';
+export const LOGIN_USER = 'login_user';
+export const REGISTER_USER = 'register_user';
+export const UPDATE_USER = 'update_user';
+export const LOGOUT_USER = 'logout_user';
+export const AUTH_USER = 'auth_user';

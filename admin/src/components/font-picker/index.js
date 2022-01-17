@@ -4,15 +4,14 @@ import './style.css';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { api } from '../../utils/api_handler';
-import Toast from '../toast';
 
-export default function App({ type, heading, site }) {
-  const [activeFontFamily, setFont] = useState('Open Sans');
-  const [size, setSize] = useState(type === 'heading' ? '42px' : '16px');
-  const [fontStyle, setFontStyle] = useState({});
+export default function App({ type, heading, site, initFont, initSize, initStyle }) {
+  console.log('initVal', initSize);
+  const [activeFontFamily, setFont] = useState(initFont);
+  const [size, setSize] = useState(initSize);
+  const [fontStyle, setFontStyle] = useState(initStyle || {});
   const [view, setView] = useState(false);
   const [sampleText, setSampleText] = useState('Sample Text');
-  const [showToast, setShowToast] = useState(false);
 
   const handleSave = () => {
     const data = {
@@ -23,11 +22,11 @@ export default function App({ type, heading, site }) {
     };
     site === 1 &&
       api.saveFonts(data).then(res => {
-        setShowToast(true);
+        alert('Saved Successfully!');
       });
     site === 2 &&
       api.saveFonts2(data).then(res => {
-        setShowToast(true);
+        alert('Saved Successfully!');
       });
   };
 
@@ -46,7 +45,6 @@ export default function App({ type, heading, site }) {
 
   return (
     <div>
-      <Toast showToast={showToast} />
       <h1 style={{ textAlign: 'center', fontSize: '3rem', marginTop: '-20%' }}> {heading}</h1>
 
       <div className='picker-container'>
@@ -79,7 +77,7 @@ export default function App({ type, heading, site }) {
           <h1 className='heading'>Font Size</h1>
           <br />
           <div className='input-group suffix'>
-            <input type='number' name='input' min='8' max='72' value={parseInt(size.split('px')[0])} onChange={handleSizeChange} />
+            <input type='number' name='input' min='8' max='72' value={size && parseInt(size.split('px')[0])} onChange={handleSizeChange} />
             <span className='input-group-addon '>px</span>
           </div>
           <div>
@@ -127,7 +125,7 @@ export default function App({ type, heading, site }) {
 
       <p
         className='apply-font'
-        style={{ padding: '5px', borderTop: '1px solid', borderBottom: '1px solid', fontSize: size, textAlign: 'center', ...fontStyle }}
+        style={{ padding: '5px', borderTop: '1px solid', borderBottom: '1px solid', fontSize: size || '20px', textAlign: 'center', ...fontStyle }}
       >
         {sampleText}
       </p>

@@ -1,8 +1,10 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 import Login from '../pages/login';
-import Accounts from '../pages/accounts';
+import NewAccount from '../pages/new-account';
+import Users from '../pages/users';
+import MyAccount from '../pages/my-account';
 
 import FontPickerHeading from '../pages/font-picker-heading';
 import FontPickerBody from '../pages/font-picker-body';
@@ -23,29 +25,48 @@ import TeamMapping from '../pages/team-icons-mapping';
 
 import Sidebar from '../components/sidebar';
 
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
+import lscache from 'lscache';
+
 export default function Index() {
-  const show = localStorage.getItem('login') === 'allow';
+  const navigate = useNavigate();
+  const user = useSelector(state => state.user);
+  const isAuth = user.isAuth;
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (!lscache.get('isAuth')) {
+      navigate('/login');
+    }
+    if (isAuth) navigate('/my-account');
+  }, [isAuth]);
+
   return (
-    <Router>
-      <div className='app'>
-        {show && <Sidebar />}
-        <Routes>
-          <Route exact path='/' element={show ? <FontPickerHeading /> : <Login />} />
-          <Route exact path='/font-heading' element={show ? <FontPickerHeading /> : <Login />} />
-          <Route exact path='/font-heading2' element={show ? <FontPickerHeading2 /> : <Login />} />
-          <Route exact path='/font-body' element={show ? <FontPickerBody /> : <Login />} />
-          <Route exact path='/font-body2' element={show ? <FontPickerBody2 /> : <Login />} />
-          <Route exact path='/font-sidebar' element={show ? <FontPickerSidebar /> : <Login />} />
-          <Route exact path='/font-sidebar2' element={show ? <FontPickerSidebar2 /> : <Login />} />
-          <Route exact path='/color-heading' element={show ? <ColorPickerHeading /> : <Login />} />
-          <Route exact path='/color-heading2' element={show ? <ColorPickerHeading2 /> : <Login />} />
-          <Route exact path='/color-body' element={show ? <ColorPickerBody /> : <Login />} />
-          <Route exact path='/color-body2' element={show ? <ColorPickerBody2 /> : <Login />} />
-          <Route exact path='/view-teams' element={show ? <TeamList /> : <Login />} />
-          <Route exact path='/set-teams' element={show ? <TeamMapping /> : <Login />} />
-          <Route exact path='/accounts' element={show ? <Accounts /> : <Login />} />
-        </Routes>
-      </div>
-    </Router>
+    <div className='app'>
+      {lscache.get('isAuth') && <Sidebar isAdmin={lscache.get('isAdmin')} path={pathname} />}
+
+      <Routes>
+        <Route exact path='/' element={<FontPickerHeading />} />
+        <Route exact path='/font-heading' element={<FontPickerHeading />} />
+        <Route exact path='/font-heading2' element={<FontPickerHeading2 />} />
+        <Route exact path='/font-body' element={<FontPickerBody />} />
+        <Route exact path='/font-body2' element={<FontPickerBody2 />} />
+        <Route exact path='/font-sidebar' element={<FontPickerSidebar />} />
+        <Route exact path='/font-sidebar2' element={<FontPickerSidebar2 />} />
+        <Route exact path='/color-heading' element={<ColorPickerHeading />} />
+        <Route exact path='/color-heading2' element={<ColorPickerHeading2 />} />
+        <Route exact path='/color-body' element={<ColorPickerBody />} />
+        <Route exact path='/color-body2' element={<ColorPickerBody2 />} />
+        <Route exact path='/view-teams' element={<TeamList />} />
+        <Route exact path='/set-teams' element={<TeamMapping />} />
+        <Route exact path='/users' element={<Users />} />
+        <Route exact path='/my-account' element={<MyAccount />} />
+        <Route exact path='/login' element={<Login />} />
+        <Route exact path='/add-new' element={<NewAccount />} />
+      </Routes>
+    </div>
   );
 }

@@ -1,7 +1,19 @@
 import $ from './http';
 
-const getTeams = params => {
-  return $.get(`/getTeams?type=${params}`);
+const getTeams = (type, view = 'all') => {
+  return $.get(`/getTeams?type=${type}&view=${view}`);
+};
+
+const getUsers = () => {
+  return $.get(`/getUsers`);
+};
+
+const getSettings = () => {
+  return $.get(`/getSettings`);
+};
+
+const getSettings2 = () => {
+  return $.get(`/getSettings2`);
 };
 
 const saveTeams = data => {
@@ -32,6 +44,14 @@ const login = data => {
   return $.post(`/login`, data);
 };
 
+const deleteAccount = data => {
+  return $.post(`/deleteAccount`, data);
+};
+
+const updateAccount = data => {
+  return $.post(`/updateAccount`, data);
+};
+
 export const api = {
   getTeams,
   saveTeams,
@@ -41,4 +61,9 @@ export const api = {
   saveFonts2,
   addAccount,
   login,
+  getUsers,
+  deleteAccount,
+  updateAccount,
+  getSettings,
+  getSettings2,
 };

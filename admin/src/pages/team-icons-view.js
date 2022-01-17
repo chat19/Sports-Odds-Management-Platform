@@ -5,6 +5,7 @@ import { api } from '../utils/api_handler';
 
 export default function Index() {
   const [teams, setTeams] = useState([]);
+
   useEffect(() => {
     api.getTeams('view').then(res => {
       setTeams(res.data);
