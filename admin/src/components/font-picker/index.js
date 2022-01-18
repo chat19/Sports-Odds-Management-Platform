@@ -6,7 +6,6 @@ import Box from '@mui/material/Box';
 import { api } from '../../utils/api_handler';
 
 export default function App({ type, heading, site, initFont, initSize, initStyle }) {
-  console.log('initVal', initSize);
   const [activeFontFamily, setFont] = useState(initFont);
   const [size, setSize] = useState(initSize);
   const [fontStyle, setFontStyle] = useState(initStyle || {});
