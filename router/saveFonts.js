@@ -7,7 +7,7 @@ router.post('/', async (req, res) => {
   const update = type === 'heading' ? { font_heading: data } : type === 'body' ? { font_body: data } : { font_sidebar: data };
 
   const fontUpdate = await typoModel.updateOne({ table: 'typo' }, update, { upsert: true });
-  console.log('fontUpdate', fontUpdate);
+
   return res.json({ success: true, data: fontUpdate });
 });
 

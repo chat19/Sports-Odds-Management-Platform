@@ -6,7 +6,7 @@ router.post('/', async (req, res) => {
   const type = req.body.type;
   const update = type === 'heading' ? { color_heading: color } : { color_body: color };
   const colorUpdate = await typoModel.updateOne({ table: 'typo' }, update, { upsert: true });
-  console.log('colorUpdate', colorUpdate);
+
   return res.json({ success: true, data: colorUpdate });
 });
 

@@ -12,7 +12,7 @@ export default function Index() {
   return (
     color && (
       <div className='page-container'>
-        <h1 style={{ marginTop: '-10%', marginBottom: '5%' }}> Set Heading Font Color</h1>
+        <h1 style={{ marginTop: '-10%', marginBottom: '5%' }}> Set Body Font Color</h1>
 
         <ColorPickerComponent sampleText='Sample Heading Text' type='body' site={2} initVal={color} />
       </div>

@@ -7,7 +7,6 @@ export default function Index() {
   const [users, setUsers] = useState([]);
   useEffect(() => {
     api.getUsers().then(res => {
-      console.log('data', res.data);
       setUsers(res.data);
     });
   }, []);

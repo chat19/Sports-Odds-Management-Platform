@@ -29,18 +29,7 @@ router.get('/', async (req, res) => {
             const home = game.HomeTeam.TeamName;
             let v_db = [],
               h_db = [];
-            // for (let i = 0; i < teams_db.length; i++) {
-            //   const team = teams_db[i];
-            //   if (visitor === 'PACKERS') console.log('team', teams_db);
-            //   if (team.old_name === visitor) {
-            //     v_db = [team.new_name, team.logo];
-            //     break;
-            //   }
-            //   if (team.old_name === home) {
-            //     h_db = [team.new_name, team.logo];
-            //     break;
-            //   }
-            // }
+
             const v_find = teams_db.find(x => x.old_name === visitor);
             const h_find = teams_db.find(x => x.old_name === home);
             if (v_find) {

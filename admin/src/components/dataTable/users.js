@@ -68,7 +68,6 @@ export default function DataTableSticky({ data }) {
   };
 
   const handleClick = async email => {
-    console.log('email', email);
     const user = await api.deleteAccount({ email: email });
     if (user.data.success) alert(`Deleted User Account with email address ${user.data.user.email} `);
     setRows(rows => rows.filter(row => row.email !== email));

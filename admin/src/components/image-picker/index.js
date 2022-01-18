@@ -3,9 +3,7 @@ import ImageUploader from 'react-images-upload';
 
 const App = () => {
   const [pictures, setPictures] = useState([]);
-  const onDrop = picture => {
-    console.log('picture', picture);
-  };
+  const onDrop = picture => {};
 
   return (
     <ImageUploader

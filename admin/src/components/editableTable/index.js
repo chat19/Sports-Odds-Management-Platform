@@ -44,7 +44,6 @@ export default function StickyHeadTable({ setView, data }) {
   const [cur, setCurrent] = React.useState('All teams');
 
   useEffect(() => {
-    console.log('data', data);
     const teamsData = data.map(team => {
       const name = team.old_name;
       const league = team.league_name;

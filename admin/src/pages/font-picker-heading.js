@@ -7,7 +7,6 @@ export default function Index() {
   const [font, setFont] = useState({});
   useEffect(() => {
     api.getSettings().then(res => {
-      console.log('res.data', res.data);
       setFont(res.data.font_heading);
     });
   }, []);
