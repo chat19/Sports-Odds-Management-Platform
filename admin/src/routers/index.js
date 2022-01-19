@@ -21,7 +21,9 @@ import ColorPickerHeading2 from '../pages/color-picker-heading2';
 import ColorPickerBody2 from '../pages/color-picker-body2';
 
 import TeamList from '../pages/team-icons-view';
+import LeaguesList from '../pages/leagues-view';
 import TeamMapping from '../pages/team-icons-mapping';
+import LeagueMapping from '../pages/league-mapping'
 
 import Sidebar from '../components/sidebar';
 
@@ -63,6 +65,8 @@ export default function Index() {
         <Route exact path='/color-body2' element={<ColorPickerBody2 />} />
         <Route exact path='/view-teams' element={<TeamList />} />
         <Route exact path='/set-teams' element={<TeamMapping />} />
+        <Route exact path='/set-leagues' element={<LeagueMapping />} />
+        <Route exact path='/view-leagues' element={<LeaguesList />} />
         <Route exact path='/users' element={<Users />} />
         <Route exact path='/my-account' element={<MyAccount />} />
         <Route exact path='/login' element={<Login />} />

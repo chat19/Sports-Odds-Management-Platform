@@ -9,10 +9,12 @@ const getUsers = require('./getUsers');
 
 const all = require('./all');
 const getTeams = require('./getTeams');
+const getLeagues = require('./getLeagues');
 const getOdds = require('./getOdds');
 const getSettings = require('./getSettings');
 const getSettings2 = require('./getSettings2');
 const saveTeams = require('./saveTeams');
+const saveLeagues = require('./saveLeagues');
 const saveColors = require('./saveColors');
 const saveFonts = require('./saveFonts');
 const saveColors2 = require('./saveColors2');
@@ -27,10 +29,12 @@ router.use('/deleteAccount', deleteAccount);
 
 router.use('/all', all);
 router.use('/getTeams', getTeams);
+router.use('/getLeagues', getLeagues);
 router.use('/getOdds', getOdds);
 router.use('/getSettings', getSettings);
 router.use('/getSettings2', getSettings2);
 router.use('/saveTeams', saveTeams);
+router.use('/saveLeagues', saveLeagues);
 router.use('/saveColors', saveColors);
 router.use('/saveFonts', saveFonts);
 router.use('/saveColors2', saveColors2);

@@ -119,12 +119,24 @@ const Aside = ({ isAdmin, path }) => {
           )}
         </Menu>
         <Menu iconShape='circle'>
-          <SubMenu title='All Teams' icon={<RiTeamFill />} defaultOpen={path === '/set-teams' || path === '/view-teams'}>
+          <SubMenu title='Teams' icon={<RiTeamFill />} defaultOpen={path === '/set-teams' || path === '/view-teams'}>
             <MenuItem active={path === '/set-teams'}>
               Mapping <Link to='/set-teams' />
             </MenuItem>
             <MenuItem active={path === '/view-teams'}>
-              View All Teams <Link to='/view-teams' />
+              View All Mapped Teams <Link to='/view-teams' />
+            </MenuItem>
+
+          </SubMenu>
+        </Menu>
+
+        <Menu iconShape='circle'>
+          <SubMenu title='Leagues' icon={<RiTeamFill />} defaultOpen={path === '/set-leagues' || path === '/view-leagues'}>
+            <MenuItem active={path === '/set-leagues'}>
+              Mapping <Link to='/set-leagues' />
+            </MenuItem>
+            <MenuItem active={path === '/view-leagues'}>
+              View All Mapped Leagues <Link to='/view-leagues' />
             </MenuItem>
           </SubMenu>
         </Menu>
@@ -149,7 +161,7 @@ const Aside = ({ isAdmin, path }) => {
         </Menu>
       </SidebarContent>
 
-      <SidebarFooter style={{ textAlign: 'center' }}>
+      {/* <SidebarFooter style={{ textAlign: 'center' }}>
         <div
           className='sidebar-btn-wrapper'
           style={{
@@ -161,7 +173,7 @@ const Aside = ({ isAdmin, path }) => {
             <span style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>View Frontend</span>
           </a>
         </div>
-      </SidebarFooter>
+      </SidebarFooter> */}
     </ProSidebar>
   );
 };

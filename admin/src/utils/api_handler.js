@@ -4,6 +4,10 @@ const getTeams = (type, view = 'all') => {
   return $.get(`/getTeams?type=${type}&view=${view}`);
 };
 
+const getLeagues = (type) => {
+  return $.get(`/getLeagues?type=${type}`);
+};
+
 const getUsers = () => {
   return $.get(`/getUsers`);
 };
@@ -18,6 +22,10 @@ const getSettings2 = () => {
 
 const saveTeams = data => {
   return $.post(`/saveTeams`, data);
+};
+
+const saveLeagues = data => {
+  return $.post(`/saveLeagues`, data);
 };
 
 const saveColors = data => {
@@ -55,6 +63,7 @@ const updateAccount = data => {
 export const api = {
   getTeams,
   saveTeams,
+  saveLeagues,
   saveColors,
   saveFonts,
   saveColors2,
@@ -66,4 +75,6 @@ export const api = {
   updateAccount,
   getSettings,
   getSettings2,
+  getLeagues,
+
 };
