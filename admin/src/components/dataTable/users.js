@@ -13,6 +13,7 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import noImage from '../../assets/placeholder.png';
 
+import lscache from 'lscache';
 import { AiFillDelete } from 'react-icons/ai';
 import { api } from '../../utils/api_handler';
 
@@ -40,7 +41,7 @@ export default function DataTableSticky({ data }) {
         user.fullName,
         user.site,
         user.isAdmin ? 'Admin' : 'Non-Admin',
-        <IconButton onClick={() => handleClick(user.email)}>
+        <IconButton onClick={() => handleClick(user.email)} disabled={user.email === lscache.get('email') }>
           <AiFillDelete />
         </IconButton>
       )
@@ -68,9 +69,11 @@ export default function DataTableSticky({ data }) {
   };
 
   const handleClick = async email => {
-    const user = await api.deleteAccount({ email: email });
-    if (user.data.success) alert(`Deleted User Account with email address ${user.data.user.email} `);
-    setRows(rows => rows.filter(row => row.email !== email));
+  
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      const user = await api.deleteAccount({ email: email });
+      setRows(rows => rows.filter(row => row.email !== email));
+    } 
   };
 
   const handleChangePage = (event, newPage) => {

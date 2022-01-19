@@ -74,7 +74,7 @@ export default function DataTableSticky({ data }) {
 
   return (
     <Paper sx={{ width: '100%', overflow: 'visible', padding: '0 2%' }}>
-      <h1 style={{ textAlign: 'center' }}> View All Teams (Updated)</h1>
+      <h1 style={{ textAlign: 'center' }}> View All Mapped Teams</h1>
       <Box sx={{ '& > :not(style)': { m: 1 } }}>
         <TextField style={{ float: 'right' }} onChange={handleChange} placeholder='Search by TeamName' size='small' />
       </Box>
