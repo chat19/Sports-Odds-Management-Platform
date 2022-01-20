@@ -36,12 +36,12 @@ export default function DataTableSticky({ data }) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   useEffect(() => {
-    const teamsData = data.map(team =>
+    const teamsData = data.filter(team => team.new_name || (team.logo && team.logo.includes('http'))).map(team =>
       createData(
         team.old_name,
         team.league_name,
         team.new_name,
-        <img src={team.logo && team.logo.includes('http') ? team.logo : noImage} width={60} height={60} />
+        team.logo && team.logo.includes('http') && <img src={team.logo} width={60} height={60} />
       )
     );
 
@@ -50,14 +50,14 @@ export default function DataTableSticky({ data }) {
 
   const handleChange = e => {
     const val = e.target.value.toLowerCase();
-    const teamRows = data
+    const teamRows = data.filter(team => team.new_name || (team.logo && team.logo.includes('http')))
       .filter(row => row.old_name.toLowerCase().includes(val) || (row.new_name && row.new_name.toLowerCase().includes(val)))
       .map(team =>
         createData(
           team.old_name,
           team.league_name,
           team.new_name,
-          <img src={team.logo.includes('http') ? team.logo : noImage} width={60} height={60} />
+          team.logo && team.logo.includes('http') && <img src={team.logo} width={60} height={60} />
         )
       );
     setRows(teamRows);
@@ -92,7 +92,7 @@ export default function DataTableSticky({ data }) {
           <TableBody>
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
               return (
-                <TableRow hover role='checkbox' tabIndex={-1} key={row.old_name}>
+                <TableRow hover role='checkbox' tabIndex={-1} key={row.old_name} style={{ height: "99px" }}>
                   {columns.map(column => {
                     const value = row[column.id];
                     return (
