@@ -53,6 +53,7 @@ export default function DataTableSticky({ data }) {
                     team.new_name,
                 )
             );
+        setPage(0);
         setRows(teamRows);
     };
 

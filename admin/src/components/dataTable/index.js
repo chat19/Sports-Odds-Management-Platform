@@ -60,6 +60,7 @@ export default function DataTableSticky({ data }) {
           team.logo && team.logo.includes('http') && <img src={team.logo} width={60} height={60} />
         )
       );
+    setPage(0);
     setRows(teamRows);
   };
 
