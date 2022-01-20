@@ -32,19 +32,20 @@ export default function DataTableSticky({ data }) {
     const [rows, setRows] = React.useState([]);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     useEffect(() => {
-        const teamsData = data.map(team =>
-            createData(
-                team.old_name,
-                team.new_name,
-            )
-        );
+        const teamsData = data.filter(team => team.new_name)
+            .map(team =>
+                createData(
+                    team.old_name,
+                    team.new_name,
+                )
+            );
 
         setRows(teamsData);
     }, [data]);
 
     const handleChange = e => {
         const val = e.target.value.toLowerCase();
-        const teamRows = data
+        const teamRows = data.filter(team => team.new_name)
             .filter(row => row.old_name.toLowerCase().includes(val) || (row.new_name && row.new_name.toLowerCase().includes(val)))
             .map(team =>
                 createData(
