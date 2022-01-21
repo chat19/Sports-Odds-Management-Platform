@@ -44,6 +44,7 @@ export default function DataTableSticky({ data }) {
     }, [data]);
 
     const handleChange = e => {
+
         const val = e.target.value.toLowerCase();
         const teamRows = data.filter(team => team.new_name)
             .filter(row => row.old_name.toLowerCase().includes(val) || (row.new_name && row.new_name.toLowerCase().includes(val)))
@@ -59,6 +60,7 @@ export default function DataTableSticky({ data }) {
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
+
     };
 
     const handleChangeRowsPerPage = event => {

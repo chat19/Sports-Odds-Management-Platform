@@ -87,6 +87,7 @@ export default function StickyHeadTable({ data }) {
 
                 )
             );
+        setPage(0);
         setRows(leagueRows);
     };
 
