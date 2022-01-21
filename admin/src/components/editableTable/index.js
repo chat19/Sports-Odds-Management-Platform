@@ -119,6 +119,7 @@ export default function StickyHeadTable({ setView, data }) {
           />
         )
       );
+    setPage(0);
     setRows(teamRows);
   };
 
