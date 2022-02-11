@@ -1,10 +1,13 @@
 const axios = require('axios').default;
+const dotenv = require('dotenv');
+dotenv.config();
+const API_KEY = process.env.API_KEY;
 
 const api = axios.create({
   baseURL: 'https://api.deadwoodbets.com',
   headers: {
     'Content-type': 'application/json',
-    'x-plee-apikey': '5FE36FD25FB1516CD2DE582DB75C9',
+    'x-plee-apikey': API_KEY,
   },
 });
 
